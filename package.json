@@ -1,0 +1,22 @@
+{
+  "name": "codewars-katas",
+  "version": "1.0.0",
+  "description": "codewars practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crogmi/codewars-katas.git"
+  },
+  "author": "Christopher Ogami",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crogmi/codewars-katas/issues"
+  },
+  "homepage": "https://github.com/crogmi/codewars-katas#readme",
+  "devDependencies": {
+    "mocha": "^9.0.2"
+  }
+}

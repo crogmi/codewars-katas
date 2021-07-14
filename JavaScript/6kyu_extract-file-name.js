@@ -12,15 +12,15 @@ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-0123456789
 
 */
 
-class FileNameExtractor {
-    static extractFileName (dirtyFileName) {
-      const arr = dirtyFileName.split('_')
-                               .slice(1)
-                               .join('_')
-                               .split('.');
-      arr.pop();
-      return arr.join('.')
-    }
+function  extractFileName(dirtyFileName) {
+  const arr = dirtyFileName.split('_')
+                            .slice(1)
+                            .join('_')
+                            .split('.');
+  arr.pop();
+  return arr.join('.')
 }
 
-FileNameExtractor.extractFileName("1231231223123131_FILE_NAME.EXTENSION.OTHEREXTENSION");
+extractFileName("1231231223123131_FILE_NAME.EXTENSION.OTHEREXTENSION");
+
+module.exports.extractFileName = extractFileName;
