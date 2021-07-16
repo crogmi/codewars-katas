@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/crogmi/codewars-katas#readme",
   "devDependencies": {
+    "eslint": "^7.30.0",
     "mocha": "^9.0.2"
   }
 }
