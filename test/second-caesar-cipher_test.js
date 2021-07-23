@@ -6,6 +6,9 @@ const encoded = ["ijJ tipvme ibw", "f lopxo uibu z", "pv xpvme ibwf ", "b qfsgfd
 
 describe('Caesar cipher', () => {
     it('properly encodes string based on provided shift value', () => {
-        assert.deepEqual(test.encodeStr(message), encoded);
+        assert.deepEqual(test.encodeStr(message, 1), encoded);
+    });
+    it('properly decodes an encoded string', () => {
+        assert.deepEqual(test.decode(encoded), message);
     });
 });

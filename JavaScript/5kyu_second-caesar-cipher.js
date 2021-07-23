@@ -48,7 +48,7 @@ const encodeStr = (s, shift) => {
     // Determine the prefix and add to the array
 
     const prefix1 = s[0].toLowerCase().charCodeAt(0);
-    const prefix2 = arr[0] > 96 ? arr[0] - 32 : arr[0] + 32;
+    const prefix2 = prefix1 + shift;
     arr.unshift(prefix1, prefix2);
 
     // Convert the char codes to characters
@@ -72,13 +72,33 @@ const encodeStr = (s, shift) => {
 
 }
 
-const decode = () => {
+const decode = (encoded) => {
+    // Map an array of char codes
+    const arr = encoded.join('').split('').map(x => x.charCodeAt(0));
+    // Determine the shift value and determine alphabetical letters through regex; Removes the prefix
+    const shift = arr[1] - arr[0];
+    const regex = /[a-zA-Z]/;
+    arr.splice(0, 2);
+    // Map over array of char codes to shift backwards based on shift
+    return arr.map(function(x) {
+        if (!String.fromCharCode(x).match(regex)) {
+            return String.fromCharCode(x);
+        } else if (x <= 90 && x - shift > 64) {
+            return String.fromCharCode(x - shift);
+        } else if (x <= 90 && x - shift < 65) {
+            return String.fromCharCode(x - shift - 64 + 90);
+        } else if (x <= 122 && x - shift > 96) {
+            return String.fromCharCode(x - shift);
+        } else if (x <= 122 && x - shift < 97) {
+            return String.fromCharCode(x - shift - 96 + 90);
+        }
+    }).join('')
+} 
 
-}
-
-const message = "I should have known that you would have a perfect answer for me!!!";
-const encoded = ["ijJ tipvme ibw", "f lopxo uibu z", "pv xpvme ibwf ", "b qfsgfdu botx", "fs gps nf!!!"];
+const message = "O CAPTAIN! my Captain! our fearful trip is done;";
+const encoded = ["opP DBQUBJ", "O! nz Dbqu", "bjo! pvs g", "fbsgvm usj", "q jt epof;"];
 encodeStr(message, 1);
 decode(encoded);
 
 module.exports.encodeStr = encodeStr;
+module.exports.decode = decode;
