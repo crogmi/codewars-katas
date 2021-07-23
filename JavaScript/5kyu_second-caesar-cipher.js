@@ -76,27 +76,60 @@ const decode = (encoded) => {
     // Map an array of char codes
     const arr = encoded.join('').split('').map(x => x.charCodeAt(0));
     // Determine the shift value and determine alphabetical letters through regex; Removes the prefix
-    const shift = arr[1] - arr[0];
+    let shift;
     const regex = /[a-zA-Z]/;
+    const prefix1 = String.fromCharCode(arr[0]);
+    const prefix2 = String.fromCharCode(arr[1]);
+    if (prefix1.match(regex) && prefix2.match(regex)) {
+        shift = arr[1] - arr[0];
+    } else {
+        shift = -1;
+    }
+    
     arr.splice(0, 2);
     // Map over array of char codes to shift backwards based on shift
-    return arr.map(function(x) {
-        if (!String.fromCharCode(x).match(regex)) {
-            return String.fromCharCode(x);
-        } else if (x <= 90 && x - shift > 64) {
-            return String.fromCharCode(x - shift);
-        } else if (x <= 90 && x - shift < 65) {
-            return String.fromCharCode(x - shift - 64 + 90);
-        } else if (x <= 122 && x - shift > 96) {
-            return String.fromCharCode(x - shift);
-        } else if (x <= 122 && x - shift < 97) {
-            return String.fromCharCode(x - shift - 96 + 90);
+    const decoded = arr.map(function(x) {
+        if (shift >= 0) {
+            if (!String.fromCharCode(x).match(regex)) {
+                return String.fromCharCode(x);
+            } else if (x <= 90 && x - shift > 64) {
+                return String.fromCharCode(x - shift);
+            } else if (x <= 90 && x - shift < 65) {
+                return String.fromCharCode(x - shift - 64 + 90);
+            } else if (x <= 122 && x - shift > 96) {
+                return String.fromCharCode(x - shift);
+            } else if (x <= 122 && x - shift < 97) {
+                return String.fromCharCode(x - shift - 96 + 90);
+            }
+        } else {
+            if (!String.fromCharCode(x).match(regex)) {
+                return String.fromCharCode(x);
+            } else if (x <= 90 && x - shift > 64) {
+                if (x - shift <= 90){
+                    return String.fromCharCode(x - shift);
+                } else {
+                    return String.fromCharCode(64 - shift);
+                }
+            } else if (x <= 90 && x - shift < 65) {
+                return String.fromCharCode(x - shift - 64 + 90);
+            } else if (x <= 122 && x - shift > 96) {
+                if (x - shift <= 122) {
+                    return String.fromCharCode(x - shift);
+                } else {
+                    return String.fromCharCode(96 - shift);
+                }
+            } else if (x <= 122 && x - shift < 97) {
+                return String.fromCharCode(x - shift - 96 + 90);
+            }
         }
     }).join('')
+
+    return decoded;
 } 
 
-const message = "O CAPTAIN! my Captain! our fearful trip is done;";
-const encoded = ["opP DBQUBJ", "O! nz Dbqu", "bjo! pvs g", "fbsgvm usj", "q jt epof;"];
+const message = 'I have spread my dreams under your feet; Tread softly because you tread on my dreams. William B Yeats (1865-1939)';
+const encoded = ["ijJ tipvme ibw", "f lopxo uibu z", "pv xpvme ibwf ", "b qfsgfdu botx", "fs gps nf!!!"]
+
 encodeStr(message, 1);
 decode(encoded);
 
